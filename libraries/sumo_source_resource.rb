@@ -15,9 +15,9 @@ class Chef
         @action = :create
         @allowed_actions.push(:create, :delete)
         @path = nil
-        @default_timezone = source_attrs['timezone'] || nil
+        @default_timezone = source_attrs['default_timezone'] || nil
         @force_timezone = source_attrs['force_timezone'] || nil
-        @category = source_attrs['category'] || nil
+        @category = source_attrs['default_category'] || nil
       end
 
       def path(arg = nil)
@@ -50,7 +50,7 @@ class Chef
 
       def node_source_attributes(run_context)
         if run_context && run_context.node
-          run_context.node[:sumologic][:defaults]
+          run_context.node[:sumologic][:log_sources]
         else
           {}
         end
