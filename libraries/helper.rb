@@ -86,7 +86,7 @@ class Sumologic
     end
 
     def source_exist?(source_name)
-      sources.any? { |c| c['name'] == source_name }
+      exist? && sources.any? { |c| c['name'] == source_name }
     end
 
     def source(source_name)
