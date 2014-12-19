@@ -35,7 +35,7 @@ class Sumologic
     end
 
     def exist?
-      metadata.nil?
+      !metadata.nil?
     end
 
     def api_request(options = {})
