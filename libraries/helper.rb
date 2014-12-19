@@ -31,7 +31,7 @@ class Sumologic
     end
 
     def metadata
-      collectors['collectors'].find { |c|c['name'] == name }
+      collectors['collectors'].find { |c|c['name'] == name }.first
     end
 
     def exist?
@@ -90,7 +90,7 @@ class Sumologic
     end
 
     def source(source_name)
-      sources.find { |c| c['name'] == source_name }
+      sources.find { |c| c['name'] == source_name }.first
     end
 
     def add_source!(source_data)
