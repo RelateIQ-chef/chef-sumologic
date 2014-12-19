@@ -26,7 +26,7 @@ class Chef
         @current_resource.category(@new_resource.category)
         @current_resource.default_timezone(@new_resource.default_timezone)
         @current_resource.force_timezone(@new_resource.force_timezone)
-        if @@collector.source_exist?(@new_resource.name) && (!node['sumologic']['disabled'])
+        if @@collector.exist? && @@collector.source_exist?(@new_resource.name) && (!node['sumologic']['disabled'])
           resource_hash = @@collector.source(@new_resource.name)
           @current_resource.path(resource_hash['pathExpression'])
           @current_resource.default_timezone(resource_hash['timeZone'])
