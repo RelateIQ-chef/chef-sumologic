@@ -21,30 +21,30 @@ class Chef
       end
 
       def path(arg = nil)
-        set_or_return(:path, arg, kind_of: String)
+        set_or_return(:path, arg, :kind_of => String)
       end
 
       def category(arg = nil)
-        set_or_return(:category, arg, kind_of: String)
+        set_or_return(:category, arg, :kind_of => String)
       end
 
       def default_timezone(arg = nil)
-        set_or_return(:default_timezone, arg, kind_of: String)
+        set_or_return(:default_timezone, arg, :kind_of => String)
       end
 
       def force_timezone(arg = false)
-        set_or_return(:force_timezone, arg, kind_of: [TrueClass, FalseClass])
+        set_or_return(:force_timezone, arg, :kind_of => [TrueClass, FalseClass])
       end
 
       def to_sumo_hash
         {
-          type: 'localWildCard',
-          name: name,
-          timeZone: default_timezone,
-          forceTimeZone: force_timezone,
-          pathExpression: path,
-          category: category,
-          sourceType: 'LocalFile'
+          :type => 'localWildCard',
+          :name => name,
+          :timeZone => default_timezone,
+          :forceTimeZone => force_timezone,
+          :pathExpression => path,
+          :category => category,
+          :sourceType => 'LocalFile'
         }
       end
 
