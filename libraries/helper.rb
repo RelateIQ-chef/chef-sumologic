@@ -6,9 +6,9 @@ class Sumologic
 
   def self.collector_exists?(node_name, email, pass)
     collector = Sumologic::Collector.new(
-      :name => "node_name",
-      :api_username => "email",
-      :api_password => "pass"
+      :name => node_name,
+      :api_username => email,
+      :api_password => pass
     )
     collector.exist?
   end
@@ -67,7 +67,7 @@ class Sumologic
     def list_collectors
       uri = URI.parse(api_endpoint + '/collectors')
       request = Net::HTTP::Get.new(uri.request_uri)
-      api_request(uri: uri, request: request)
+      api_request(:uri => uri, :request => request)
     end
 
     def collectors
@@ -81,7 +81,7 @@ class Sumologic
     def fetch_source_data
       u = URI.parse(api_endpoint + "/collectors/#{id}/sources")
       request = Net::HTTP::Get.new(u.request_uri)
-      details = api_request(uri: u, request: request)
+      details = api_request(:uri => u, :request => request)
       details['sources']
     end
 
@@ -96,33 +96,33 @@ class Sumologic
     def add_source!(source_data)
       u = URI.parse(api_endpoint + "/collectors/#{id}/sources")
       request = Net::HTTP::Post.new(u.request_uri)
-      request.body = JSON.dump({ source: source_data })
+      request.body = JSON.dump({ :source => source_data })
       request.content_type = 'application/json'
-      response = api_request(uri: u, request: request, parse_json: false)
+      response = api_request(:uri => u, :request => request, :parse_json => false)
       response
     end
 
     def delete_source!(source_id)
       u = URI.parse(api_endpoint + "/collectors/#{source_id}")
       request = Net::HTTP::Delete.new(u.request_uri)
-      response = api_request(uri: u, request: request, parse_json: false)
+      response = api_request(:uri => u, :request => request, :parse_json => false)
       response
     end
 
     def update_source!(source_id, source_data)
       u = URI.parse("https://api.sumologic.com/api/v1/collectors/#{id}/sources/#{source_id}")
       request = Net::HTTP::Put.new(u.request_uri)
-      request.body = JSON.dump({ source: source_data.merge(id: source_id) })
+      request.body = JSON.dump({ :source => source_data.merge(:id => source_id) })
       request.content_type = 'application/json'
       request['If-Match'] = get_etag(source_id)
-      response = api_request(uri: u, request: request, parse_json: false)
+      response = api_request(:uri => u, :request => request, :parse_json => false)
       response
     end
 
     def get_etag(source_id)
       u = URI.parse("https://api.sumologic.com/api/v1/collectors/#{id}/sources/#{source_id}")
       request = Net::HTTP::Get.new(u.request_uri)
-      response = api_request(uri: u, request: request, parse_json: false)
+      response = api_request(:uri => u, :request => request, :parse_json => false)
       response['etag']
     end
   end
