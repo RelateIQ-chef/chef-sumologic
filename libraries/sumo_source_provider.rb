@@ -16,9 +16,9 @@ class Chef
       def load_current_resource
         return if node['sumologic']['disabled']
         @@collector ||= Sumologic::Collector.new(
-          name: node.name,
-          api_username: node['sumologic']['userID'],
-          api_password: node['sumologic']['password']
+          :name => node.name,
+          :api_username => node['sumologic']['userID'],
+          :api_password => node['sumologic']['password']
         )
 
         @current_resource = Chef::Resource::SumoSource.new(@new_resource.name)
