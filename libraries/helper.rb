@@ -6,9 +6,9 @@ class Sumologic
 
   def self.collector_exists?(node_name, email, pass)
     collector = Sumologic::Collector.new(
-      name: node_name,
-      api_username: email,
-      api_password: pass
+      :name => "node_name",
+      :api_username => "email",
+      :api_password => "pass"
     )
     collector.exist?
   end
