@@ -7,8 +7,8 @@ class Chef
 
       def initialize(name, run_context = nil)
         super
-        if name !~ /^[a-z][A-Za-z0-9_-]*$/
-          raise Chef::Exceptions::ValidationFailed, "Sumo source #{name} doesn't match ^[a-z][A-Za-z0-9_-]*$!"
+        if name !~ /^[A-Za-z][A-Za-z0-9_-]*$/
+          raise Chef::Exceptions::ValidationFailed, "Sumo source #{name} doesn't match ^[A-Za-z][A-Za-z0-9_-]*$!"
         end
         source_attrs = node_source_attributes(run_context)
         @resource_name = :sumo_source
