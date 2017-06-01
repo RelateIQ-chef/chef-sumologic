@@ -65,7 +65,7 @@ class Sumologic
     end
 
     def list_collectors
-      uri = URI.parse(api_endpoint + '/collectors')
+      uri = URI.parse(api_endpoint + '/collectors?limit=10000')
       request = Net::HTTP::Get.new(uri.request_uri)
       api_request(:uri => uri, :request => request)
     end
