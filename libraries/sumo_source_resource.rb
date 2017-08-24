@@ -18,6 +18,7 @@ class Chef
         @default_timezone = source_attrs['default_timezone'] || nil
         @force_timezone = source_attrs['force_timezone'] || nil
         @category = source_attrs['default_category'] || nil
+        @blacklist = source_attrs['blacklist'] || nil
       end
 
       def path(arg = nil)
@@ -36,6 +37,10 @@ class Chef
         set_or_return(:force_timezone, arg, :kind_of => [TrueClass, FalseClass])
       end
 
+      def blacklist(arg = [])
+        set_or_return(:blacklist, arg, :kind_of => Array)
+      end
+
       def to_sumo_hash
         {
           :type => 'localWildCard',
@@ -44,7 +49,8 @@ class Chef
           :forceTimeZone => force_timezone,
           :pathExpression => path,
           :category => category,
-          :sourceType => 'LocalFile'
+          :sourceType => 'LocalFile',
+          :blacklist => blacklist
         }
       end
 
