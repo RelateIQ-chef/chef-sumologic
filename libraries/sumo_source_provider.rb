@@ -22,6 +22,7 @@ class Chef
         )
 
         @current_resource = Chef::Resource::SumoSource.new(@new_resource.name)
+
         @current_resource.path(@new_resource.path)
         @current_resource.category(@new_resource.category)
         @current_resource.default_timezone(@new_resource.default_timezone)

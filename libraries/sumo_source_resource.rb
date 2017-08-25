@@ -2,7 +2,7 @@ class Chef
   class Resource
     class SumoSource < Chef::Resource
       identity_attr :path
-      state_attrs :category, :default_timezone, :force_timezone
+      state_attrs :category, :default_timezone, :force_timezone, :blacklist
       provider_base Chef::Provider::SumoSource
 
       def initialize(name, run_context = nil)
@@ -37,7 +37,7 @@ class Chef
         set_or_return(:force_timezone, arg, :kind_of => [TrueClass, FalseClass])
       end
 
-      def blacklist(arg = [])
+      def blacklist(arg = nil)
         set_or_return(:blacklist, arg, :kind_of => Array)
       end
 
