@@ -18,7 +18,7 @@ class Chef
         @default_timezone = source_attrs['default_timezone'] || nil
         @force_timezone = source_attrs['force_timezone'] || nil
         @category = source_attrs['default_category'] || nil
-        @blacklist = source_attrs['blacklist'] || nil
+        @blacklist = source_attrs['blacklist'] || []
       end
 
       def path(arg = nil)
