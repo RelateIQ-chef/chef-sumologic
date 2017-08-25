@@ -22,16 +22,19 @@ class Chef
         )
 
         @current_resource = Chef::Resource::SumoSource.new(@new_resource.name)
+
         @current_resource.path(@new_resource.path)
         @current_resource.category(@new_resource.category)
         @current_resource.default_timezone(@new_resource.default_timezone)
         @current_resource.force_timezone(@new_resource.force_timezone)
+        @current_resource.blacklist(@new_resource.blacklist)
         if @@collector.source_exist?(@new_resource.name) && (!node['sumologic']['disabled'])
           resource_hash = @@collector.source(@new_resource.name)
           @current_resource.path(resource_hash['pathExpression'])
           @current_resource.default_timezone(resource_hash['timeZone'])
           @current_resource.force_timezone(resource_hash['forceTimeZone'])
           @current_resource.category(resource_hash['category'])
+          @current_resource.blacklist(resource_hash['blacklist'])
         end
         @current_resource
       end
