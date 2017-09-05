@@ -18,7 +18,8 @@ class Chef
         @@collector ||= Sumologic::Collector.new(
           :name => node.name,
           :api_username => node['sumologic']['userID'],
-          :api_password => node['sumologic']['password']
+          :api_password => node['sumologic']['password'],
+          :api_endpoint => node['sumologic']['api_endpoint']
         )
 
         @current_resource = Chef::Resource::SumoSource.new(@new_resource.name)

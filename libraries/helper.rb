@@ -20,10 +20,11 @@ class Sumologic
       @name = opts[:name]
       @api_username = opts[:api_username]
       @api_password = opts[:api_password]
+      @api_endpoint = opts[:api_endpoint] || 'https://api.sumologic.com/api/v1'
     end
 
     def api_endpoint
-      'https://api.sumologic.com/api/v1'
+      @api_endpoint
     end
 
     def sources
@@ -50,6 +51,7 @@ class Sumologic
       http.use_ssl = true
       request.basic_auth(api_username, api_password)
       response = http.request(request)
+
       raise ApiError, "Unable to get source list #{response.inspect}" unless response.is_a?(Net::HTTPSuccess)
       if parse_json
         JSON.parse(response.body)
@@ -110,7 +112,7 @@ class Sumologic
     end
 
     def update_source!(source_id, source_data)
-      u = URI.parse("https://api.sumologic.com/api/v1/collectors/#{id}/sources/#{source_id}")
+      u = URI.parse(api_endpoint + "/collectors/#{id}/sources/#{source_id}")
       request = Net::HTTP::Put.new(u.request_uri)
       request.body = JSON.dump({ :source => source_data.merge(:id => source_id) })
       request.content_type = 'application/json'
@@ -120,7 +122,7 @@ class Sumologic
     end
 
     def get_etag(source_id)
-      u = URI.parse("https://api.sumologic.com/api/v1/collectors/#{id}/sources/#{source_id}")
+      u = URI.parse(api_endpoint + "/collectors/#{id}/sources/#{source_id}")
       request = Net::HTTP::Get.new(u.request_uri)
       response = api_request(:uri => u, :request => request, :parse_json => false)
       response['etag']
