@@ -32,7 +32,7 @@ class Sumologic
     end
 
     def metadata
-      collectors['collectors'].select { |c|c['name'] == name }.first
+      collectors['collectors'].select { |c|c['name'] == name || c['name'] =~ /#{name}-[0-9]{13}/ }.first
     end
 
     def exist?
