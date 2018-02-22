@@ -4,23 +4,25 @@ require 'json'
 class Sumologic
   class ApiError < RuntimeError; end
 
-  def self.collector_exists?(node_name, email, pass)
+  def self.collector_exists?(node_name, email, pass, api_collectors_limit)
     collector = Sumologic::Collector.new(
       :name => node_name,
       :api_username => email,
-      :api_password => pass
+      :api_password => pass,
+      :api_collectors_limit => api_collectors_limit
     )
     collector.exist?
   end
 
   class Collector
-    attr_reader :name, :api_username, :api_password
+    attr_reader :name, :api_username, :api_password, :api_collectors_limit
 
     def initialize(opts = {})
       @name = opts[:name]
       @api_username = opts[:api_username]
       @api_password = opts[:api_password]
       @api_endpoint = opts[:api_endpoint] || 'https://api.sumologic.com/api/v1'
+      @api_collectors_limit = opts[:api_collectors_limit]
     end
 
     def api_endpoint
@@ -67,7 +69,7 @@ class Sumologic
     end
 
     def list_collectors
-      uri = URI.parse(api_endpoint + '/collectors?limit=10000')
+      uri = URI.parse(api_endpoint + '/collectors?limit=' + api_collectors_limit.to_s)
       request = Net::HTTP::Get.new(uri.request_uri)
       api_request(:uri => uri, :request => request)
     end

@@ -23,3 +23,6 @@
 # Set to true to disable the collector on this node
 default['sumologic']['disabled'] = false
 default['sumologic']['log_sources']['default_category'] = 'log'
+
+# limit the amount of collectors shown when querying the sumologic /collector API endpoint
+default['sumologic']['api_collectors_limit'] = 15000
